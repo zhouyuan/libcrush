@@ -1,7 +1,12 @@
 #ifndef CEPH_CRUSH_BUILDER_H
 #define CEPH_CRUSH_BUILDER_H
 
-#include "crush.h"
+#include "int_types.h"
+
+struct crush_bucket;
+struct crush_choose_arg;
+struct crush_map;
+struct crush_rule;
 
 /** @ingroup API
  *
@@ -75,10 +80,10 @@ extern struct crush_rule *crush_make_rule(int len, int ruleset, int type, int mi
  *     __arg1__ leaves within all the buckets of type __arg2__ and
  *     select them.
  *
- * In all __CHOOSE__ steps, if __arg1__ is zero, the number of items
- * to select is determined by the __max_result__ argument of
- * crush_do_rule(), i.e. __arg1__ is __max_result__ minus the number of
- * items already in the result.
+ * In all __CHOOSE__ steps, if __arg1__ is less than or equal to zero,
+ * the number of items to select is equal to the __max_result__ argument
+ * of crush_do_rule() minus __arg1__. It is common to set __arg1__ to zero
+ * to select as many items as requested by __max_result__.
  *
  * - __CRUSH_RULE_SET_CHOOSE_TRIES__ and __CRUSH_RULE_SET_CHOOSELEAF_TRIES__
  *
