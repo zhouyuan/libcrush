@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.11)
 project(libcrush)
 set(VERSION 1.0.0)
 
-set(CMAKE_C_FLAGS_NONE "${CMAKE_C_FLAGS_NONE} -Wall -O2 -g")
+set(CMAKE_C_FLAGS_NONE "${CMAKE_C_FLAGS_NONE} -Wall -O2 -g -fPIC")
 
 include_directories(${CMAKE_SOURCE_DIR}/crush)
 include_directories(${CMAKE_BINARY_DIR}/crush)
@@ -35,6 +35,8 @@ set(crush_srcs
 set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/lib CACHE PATH "libdir")
 set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include CACHE PATH "includedir")
 set(CMAKE_INSTALL_DATADIR ${CMAKE_INSTALL_PREFIX}/share CACHE PATH "datadir")
+
+add_library(crush_static STATIC ${crush_srcs})
 
 add_library(crush SHARED ${crush_srcs})
 set_target_properties(crush PROPERTIES
